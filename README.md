@@ -1,5 +1,5 @@
 
-# Bookshelf Django App - CRUD Operations Guide
+# Bookshelf Django App 
 
 This README shows how to perform Create, Retrieve, Update, and Delete (CRUD) operations on the `Book` model in the `bookshelf` Django app using Django shell commands.
 
