@@ -82,5 +82,3 @@ print(books)  # Should not include deleted books
 - Use try-except blocks to handle exceptions when using `.get()`.
 - You can execute these commands in Django shell (`python manage.py shell`) or adapt into views as needed.
 ```
-
----
