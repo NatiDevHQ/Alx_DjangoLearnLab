@@ -131,6 +131,7 @@ class Book(models.Model):
 📂 Project Structure (Excerpt)
 
 bookshelf_project/
+|______>library/
 ├── bookshelf/
 │   ├── models.py
 │   ├── views.py
