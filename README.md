@@ -160,5 +160,3 @@ This project is open-source and available for educational and demonstration purp
 
 ---
 
-Let me know if you'd like this converted into an actual file or need the code broken into separate sections for better copy-paste usage.
-
