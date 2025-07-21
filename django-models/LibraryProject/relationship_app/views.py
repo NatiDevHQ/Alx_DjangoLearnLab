@@ -31,6 +31,7 @@ def register_view(request):
     return render(request, 'registration/register.html', {'form': form})
 
 
+
 # Class-based view to show details for a specific library
 class LibraryDetailView(DetailView):
     model = Library
