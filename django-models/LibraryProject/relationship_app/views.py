@@ -31,6 +31,15 @@ def register_view(request):
     return render(request, 'registration/register.html', {'form': form})
 
 
+def custom_login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            login(request, form.get_user())
+            return redirect('home')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'relationship_app/login.html', {'form': form})
 
 # Class-based view to show details for a specific library
 class LibraryDetailView(DetailView):
