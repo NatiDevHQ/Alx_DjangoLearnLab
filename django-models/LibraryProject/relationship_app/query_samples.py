@@ -2,20 +2,20 @@ import os
 import sys
 import django
 
-# Add the project root to Python path
+# Add project root to Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Set up Django settings
+# Set Django settings module
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'LibraryProject.settings')
 django.setup()
 
 from relationship_app.models import Author, Book, Library, Librarian
 
-# --- Query 1: All books by a specific author ---
+# --- Query 1: All books by a specific author using filter ---
 author_name = "J.K. Rowling"
 try:
     author = Author.objects.get(name=author_name)
-    books_by_author = Book.objects.filter(author=author)  # ✅ Required line
+    books_by_author = Book.objects.filter(author=author)  # ✅ REQUIRED LINE
     print(f"Books by {author.name}: {[book.title for book in books_by_author]}")
 except Author.DoesNotExist:
     print(f"Author '{author_name}' not found.")
@@ -29,9 +29,9 @@ try:
 except Library.DoesNotExist:
     print(f"Library '{library_name}' not found.")
 
-# --- Query 3: Retrieve the librarian for a library ---
+# --- Query 3: Retrieve the librarian for a library using objects.get(library=...) ---
 try:
-    librarian = library.librarian
-    print(f"Librarian at {library.name}: {librarian.name}")
-except Exception as e:
-    print(f"Error retrieving librarian: {str(e)}")
+    librarian = Librarian.objects.get(library=library)  # ✅ REQUIRED LINE
+    print(f"Librarian for {library.name}: {librarian.name}")
+except Librarian.DoesNotExist:
+    print(f"No librarian assigned to {library.name}.")
