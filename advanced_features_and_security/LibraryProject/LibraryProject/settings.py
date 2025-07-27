@@ -129,6 +129,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # SECURITY SETTINGS
+
 DEBUG = False  # Only in production
 
 SECURE_BROWSER_XSS_FILTER = True
@@ -141,3 +142,14 @@ SESSION_COOKIE_SECURE = True
 CSP_DEFAULT_SRC = ("'self'",)
 CSP_STYLE_SRC = ("'self'", 'https://fonts.googleapis.com')
 CSP_SCRIPT_SRC = ("'self'",)
+
+# Force HTTPS redirect
+SECURE_SSL_REDIRECT = True  # Redirect all HTTP to HTTPS
+
+# HTTP Strict Transport Security (HSTS)
+SECURE_HSTS_SECONDS = 31536000  # Enforce HTTPS for 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Apply to all subdomains
+SECURE_HSTS_PRELOAD = True  # Allow browser preloading
+
+# Optional: mark the app as behind a proxy (e.g. if using Nginx/Heroku)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
