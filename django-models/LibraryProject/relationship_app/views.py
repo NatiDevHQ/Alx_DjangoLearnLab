@@ -13,6 +13,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 
+#for the admin view
+from django.shortcuts import render
+from django.contrib.auth.decorators import user_passes_test, login_required
 
 # Function to list all books
 def list_books(request):
@@ -53,3 +56,11 @@ class RegisterView(CreateView):
     template_name = 'registration/register.html'
     form_class = UserCreationForm
     success_url = reverse_lazy('login')  # redirect to login after registration
+
+def is_admin(user):
+    return hasattr(user, 'userprofile') and user.userprofile.role == 'Admin'
+
+@user_passes_test(is_admin)
+@login_required
+def admin_view(request):
+    return render(request, 'admin_view.html')
