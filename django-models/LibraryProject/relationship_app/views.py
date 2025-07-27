@@ -64,3 +64,4 @@ def is_admin(user):
 @login_required
 def admin_view(request):
     return render(request, 'admin_view.html')
+

@@ -12,7 +12,8 @@ urlpatterns = [
     path('register/', register, name='register'),  # ✅ CHECK: views.register
     path('login/', LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('logout/', LogoutView.as_view(template_name='registration/logged_out.html'), name='logout'),  # ✅ CHECK: LogoutView.as_view(template_name=...)
-    path('admin-panel/', admin_view, name='admin_view'),
+    # Admin view
+     path('admin/', admin_view, name='admin_view')
 ]
 
 
