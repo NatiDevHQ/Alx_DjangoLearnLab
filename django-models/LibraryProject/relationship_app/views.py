@@ -1,20 +1,27 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import login
-from django.contrib.auth.decorators import user_passes_test, login_required
+from django.shortcuts import render
+from django.http import HttpResponse
 from django.views.generic.detail import DetailView
+from .models import Library
+from .models import Book
+# relationship_app/views.py
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.forms import AuthenticationForm
 
-from .models import Library, Book
+from django.shortcuts import render, redirect
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
+
+#for the admin view
+from django.shortcuts import render
+from django.contrib.auth.decorators import user_passes_test, login_required
 
 # Function to list all books
 def list_books(request):
     books = Book.objects.all()
     return render(request, 'relationship_app/list_books.html', {'books': books})
 
-# Register view
 def register_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -26,7 +33,7 @@ def register_view(request):
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
 
-# Custom login view (if needed)
+
 def custom_login(request):
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
@@ -37,13 +44,14 @@ def custom_login(request):
         form = AuthenticationForm()
     return render(request, 'relationship_app/login.html', {'form': form})
 
-# Class-based view for library details
+# Class-based view to show details for a specific library
 class LibraryDetailView(DetailView):
     model = Library
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
 
-# RegisterView class-based
+
+
 class RegisterView(CreateView):
     template_name = 'registration/register.html'
     form_class = UserCreationForm
