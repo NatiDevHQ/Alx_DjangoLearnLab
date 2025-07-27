@@ -14,7 +14,7 @@ urlpatterns = [
     path('library/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),
 
     # Registration route
-    path('register/', views.register, name='register'),
+    path('register/', register, name='register'),
 
     # Login/logout routes
     path('login/', LoginView.as_view(template_name='registration/login.html'), name='login'),
@@ -25,3 +25,8 @@ urlpatterns = [
     path('librarian/', librarian_view, name='librarian_view'),
     path('member/', member_view, name='member_view'),
 ]
+
+
+
+
+

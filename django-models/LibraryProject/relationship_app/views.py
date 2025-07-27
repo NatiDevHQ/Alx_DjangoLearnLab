@@ -22,7 +22,8 @@ def list_books(request):
     books = Book.objects.all()
     return render(request, 'relationship_app/list_books.html', {'books': books})
 
-def register(request):
+
+def register_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -31,8 +32,7 @@ def register(request):
             return redirect('home')  # Adjust to your homepage name
     else:
         form = UserCreationForm()
-    return render(request, 'relationship_app/register.html', {'form': form})
-
+    return render(request, 'registration/register.html', {'form': form})
 
 def custom_login(request):
     if request.method == 'POST':
