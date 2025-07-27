@@ -6,9 +6,11 @@
     <title>form</title>
   </head>
   <body>
+    <!-- bookshelf/templates/bookshelf/form_example.html -->
+    <h1>Book Form</h1>
     <form method="post">
       {% csrf_token %} {{ form.as_p }}
-      <button type="submit">Submit</button>
+      <button type="submit">Save</button>
     </form>
   </body>
 </html>
