@@ -3,7 +3,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from .views import (
     list_books,
     LibraryDetailView,
-    register_view,
+    register,
     admin_view,
     librarian_view,
     member_view,
@@ -14,7 +14,8 @@ urlpatterns = [
     path('library/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),
 
     # Registration route
-    path('register/', register_view, name='register'),
+    path('register/', register, name='register'),
+,
 
     # Login/logout routes
     path('login/', LoginView.as_view(template_name='registration/login.html'), name='login'),
