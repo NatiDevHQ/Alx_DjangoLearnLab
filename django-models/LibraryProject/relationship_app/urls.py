@@ -21,9 +21,9 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(template_name='registration/logged_out.html'), name='logout'),
 
     # Role-based views
-    path('admin/', admin_view, name='admin_view'),       # <-- comma was missing here
-    path('librarian/', librarian_view, name='librarian_view'),
-    path('member/', member_view, name='member_view'),
+     path('admin-view/', admin_view, name='admin_view'),
+    path('librarian-view/', librarian_view, name='librarian_view'),
+    path('member-view/', member_view, name='member_view'),
 ]
 
 
