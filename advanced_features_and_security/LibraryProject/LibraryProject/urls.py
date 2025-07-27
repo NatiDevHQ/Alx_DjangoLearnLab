@@ -18,10 +18,13 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('relationship_app.urls')),
-   
-]
+    path('books/', include('relationship_app.urls')),
+    # other patterns...
 
+    # Add this to redirect root URL to the book list view
+    path('', RedirectView.as_view(url='/books/', permanent=False)),
+]
