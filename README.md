@@ -3,8 +3,7 @@
 
 # Alx_DjangoLearnLab
 
-A learning lab for Django projects and experiments.
-
+A learning lab for Django projects
 ## Table of Contents
 
 - [Overview](#overview)
