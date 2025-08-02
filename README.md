@@ -1,10 +1,6 @@
 # ALX ETHIOPIA 🇪🇹 
 ---
 
-# Alx_DjangoLearnLab
-
-A learning lab for Django projects and experiments.
-
 ## Table of Contents
 
 - [Overview](#overview)
