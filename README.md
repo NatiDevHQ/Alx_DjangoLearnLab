@@ -3,7 +3,6 @@
 
 # Alx_DjangoLearnLab
 
-A 
 ## Table of Contents
 
 - [Overview](#overview)
