@@ -1,8 +1,6 @@
 # ALX ETHIOPIA 🇪🇹 
 ---
 
-# Alx_DjangoLearnLab
-
 ## Table of Contents
 
 - [Overview](#overview)
