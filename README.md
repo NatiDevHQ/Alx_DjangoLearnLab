@@ -26,7 +26,7 @@ This repository contains project files and experiments for learning Django, a po
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Eng-Natole/Alx_DjangoLearnLab.git
+   git clone https://github.com/NatiDevHQ/Alx_DjangoLearnLab.git
    ```
 2. Navigate into the project directory:
    ```bash
