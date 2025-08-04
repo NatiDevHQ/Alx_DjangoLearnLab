@@ -56,10 +56,6 @@ This repository contains project files and experiments for learning Django, a po
 
 Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
-## License
-
-
-
 ## Contact
 
 For questions or collaboration, reach out via [GitHub Issues](https://github.com/NatiDevHQ/Alx_DjangoLearnLab/issues).
