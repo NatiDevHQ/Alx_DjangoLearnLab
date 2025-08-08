@@ -1,8 +1,6 @@
 
 
-# ALX ETHIOPIA 🇪🇹
-
----
+# ALX
 
 ## Table of Contents
 
