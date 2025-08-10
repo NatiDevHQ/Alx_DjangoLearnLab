@@ -1,8 +1,6 @@
-complete
 
-# ALX ETHIOPIA 🇪🇹
 
----
+# ALX
 
 ## Table of Contents
 
@@ -11,7 +9,6 @@ complete
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
 - [Contact](#contact)
 
 ## Overview
@@ -55,10 +52,6 @@ This repository contains project files and experiments for learning Django, a po
 ## Contributing
 
 Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
-
-## License
-
-[Choose a license for your project](https://choosealicense.com/).
 
 ## Contact
 
