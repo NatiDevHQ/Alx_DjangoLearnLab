@@ -1,4 +1,4 @@
-Not completed yet
+in progress 
 
 # ALX ETHIOPIA 🇪🇹 
 
