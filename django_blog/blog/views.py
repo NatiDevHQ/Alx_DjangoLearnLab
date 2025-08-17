@@ -3,20 +3,15 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
-from .forms import RegistrationForm, ProfileForm
-
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Post
-
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView, DeleteView
-from .models import Post, Comment
-from .forms import CommentForm
 from django.db.models import Q
-from django.views.generic import ListView
-from .models import Post
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import (
+    ListView, DetailView, 
+    CreateView, UpdateView, DeleteView
+)
+from .models import Post, Comment
+from .forms import RegistrationForm, ProfileForm, CommentForm
+
 
 class SearchResultsView(ListView):
     model = Post
@@ -33,7 +28,7 @@ class SearchResultsView(ListView):
             ).distinct()
         return Post.objects.none()
 
-# Create comment
+
 class CommentCreateView(LoginRequiredMixin, CreateView):
     model = Comment
     form_class = CommentForm
@@ -41,13 +36,13 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        form.instance.post_id = self.kwargs['pk']  # use pk from URL
+        form.instance.post_id = self.kwargs['pk']
         return super().form_valid(form)
 
     def get_success_url(self):
         return self.object.post.get_absolute_url()
 
-# Update comment
+
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
     form_class = CommentForm
@@ -60,7 +55,7 @@ class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def get_success_url(self):
         return self.object.post.get_absolute_url()
 
-# Delete comment
+
 class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Comment
     template_name = 'blog/comment_confirm_delete.html'
@@ -73,13 +68,13 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return self.object.post.get_absolute_url()
 
 
-# List & Detail (open to all)
 class PostListView(ListView):
     model = Post
     template_name = 'blog/post_list.html'
     context_object_name = 'posts'
     ordering = ['-published_date']
-    paginate_by = 5  # Add pagination
+    paginate_by = 5
+
 
 class PostDetailView(DetailView):
     model = Post
@@ -91,60 +86,59 @@ class PostDetailView(DetailView):
         return context
 
 
-# Create (login required)
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     template_name = 'blog/post_form.html'
-    fields = ['title', 'content']
-    success_url = reverse_lazy('post-list')  # Add success URL
+    fields = ['title', 'content', 'tags']
+    success_url = reverse_lazy('post-list')
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-# Update (login + author only)
+
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     template_name = 'blog/post_form.html'
-    fields = ['title', 'content']
-    success_url = reverse_lazy('post-list')  # Add success URL
+    fields = ['title', 'content', 'tags']
+    success_url = reverse_lazy('post-list')
 
     def test_func(self):
         post = self.get_object()
         return self.request.user == post.author
 
-# Delete (login + author only)
+
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     template_name = 'blog/post_confirm_delete.html'
-    success_url = reverse_lazy('post-list')  # Use reverse_lazy for consistency
+    success_url = reverse_lazy('post-list')
 
     def test_func(self):
         post = self.get_object()
         return self.request.user == post.author
 
 
-# --- Login and Logout ---
 class BlogLoginView(LoginView):
     template_name = 'blog/auth/login.html'
     redirect_authenticated_user = True
 
+
 class BlogLogoutView(LogoutView):
     next_page = reverse_lazy('login')
 
-# --- Registration ---
+
 def register(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)  # auto-login after register
+            login(request, user)
             return redirect('profile')
     else:
         form = RegistrationForm()
     return render(request, 'blog/auth/register.html', {"form": form})
 
-# --- Profile ---
+
 @login_required
 def profile(request):
     if request.method == "POST":
