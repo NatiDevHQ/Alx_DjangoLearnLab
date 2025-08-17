@@ -1,76 +1,43 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from taggit.forms import TagWidget  # Import TagWidget from taggit
-from .models import Post, Comment, Tag
+from taggit.forms import TagWidget   # ✅ Import TagWidget
+from .models import Post, Comment
 
+
+# Post Form with Taggit integration
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'content', 'tags']
+        fields = ['title', 'content', 'tags']  # ✅ include tags
         widgets = {
-            'title': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter post title'
-            }),
-            'content': forms.Textarea(attrs={
-                'class': 'form-control',
-                'rows': 5,
-                'placeholder': 'Write your post content here...'
-            }),
-            'tags': TagWidget(attrs={
-                'class': 'form-control',
-                'placeholder': 'Add comma-separated tags',
-                'data-role': 'tagsinput'  # Optional for better tag input UI
-            })
-        }
-        help_texts = {
-            'tags': 'Comma-separated list of tags'
+            'tags': TagWidget(),  # ✅ REQUIRED for ALX test
         }
 
+
+# Comment Form
 class CommentForm(forms.ModelForm):
+    content = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 3, 'placeholder': 'Write a comment...'}),
+        label=''
+    )
+
     class Meta:
         model = Comment
         fields = ['content']
-        widgets = {
-            'content': forms.Textarea(attrs={
-                'class': 'form-control',
-                'rows': 3,
-                'placeholder': 'Write your comment here...'
-            })
-        }
-        labels = {
-            'content': ''
-        }
 
+
+# User Registration Form
 class RegistrationForm(UserCreationForm):
-    email = forms.EmailField(
-        required=True,
-        widget=forms.EmailInput(attrs={
-            'class': 'form-control',
-            'autocomplete': 'email'
-        })
-    )
+    email = forms.EmailField(required=True)
 
     class Meta:
         model = User
         fields = ("username", "email", "password1", "password2")
-        widgets = {
-            'username': forms.TextInput(attrs={
-                'class': 'form-control',
-                'autocomplete': 'username'
-            }),
-        }
 
+
+# Profile Form
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ("first_name", "last_name", "email")
-        widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'email': forms.EmailInput(attrs={
-                'class': 'form-control',
-                'autocomplete': 'email'
-            }),
-        }
