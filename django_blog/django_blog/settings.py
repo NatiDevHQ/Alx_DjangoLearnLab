@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -140,17 +141,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Where Django looks for templates (keep if you already set this up)
-from pathlib import Path
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-TEMPLATES[0]['DIRS'] = [ BASE_DIR / 'templates' ]  # optional project-level; we’ll keep app templates too
-
-# Auth redirects
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'profile'         # after successful login
-LOGOUT_REDIRECT_URL = 'login'          # after logout
 
 # Static files (you already have STATIC_URL; keep this)
 STATIC_URL = 'static/'
+
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
 # Optional project-level static (we’ll also keep app-level static)
 # STATICFILES_DIRS = [ BASE_DIR / 'static' ]

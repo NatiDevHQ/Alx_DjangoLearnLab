@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <h2>Profile</h2>
+    <form method="post">
+      {% csrf_token %}
+      <label>Username</label>
+      <input
+        type="text"
+        name="username"
+        value="{{ request.user.username }}"
+      /><br />
+      <label>Email</label>
+      <input type="email" name="email" value="{{ request.user.email }}" /><br />
+      <button type="submit">Save</button>
+    </form>
+  </body>
+</html>

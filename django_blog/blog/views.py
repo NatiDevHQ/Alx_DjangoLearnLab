@@ -5,6 +5,10 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib import messages
 
 from .forms import RegistrationForm, ProfileForm
 
@@ -48,3 +52,16 @@ def profile(request):
         form = ProfileForm(instance=request.user)
 
     return render(request, 'blog/auth/profile.html', {"form": form})
+
+
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        user = request.user
+        user.username = request.POST.get('username')
+        user.email = request.POST.get('email')
+        user.save()
+        messages.success(request, "Profile updated successfully!")
+        return redirect('profile')
+    return render(request, 'profile.html')
