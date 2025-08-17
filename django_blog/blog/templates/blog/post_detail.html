@@ -19,6 +19,6 @@
   {% csrf_token %} {{ comment_form.as_p }}
   <button type="submit">Add Comment</button>
 </form>
-{% else %}
+
 <p><a href="{% url 'login' %}">Log in</a> to comment.</p>
 {% endif %}
