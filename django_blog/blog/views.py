@@ -9,62 +9,51 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
 
-from django.shortcuts import get_object_or_404, redirect, render
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, UpdateView, DeleteView
 from .models import Post, Comment
 from .forms import CommentForm
-from django.contrib import messages
 
-# Add comment to a post
-@login_required
-def add_comment(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.author = request.user
-            comment.post = post
-            comment.save()
-            messages.success(request, 'Comment added successfully!')
-            return redirect('post_detail', pk=post.pk)
-    else:
-        form = CommentForm()
-    return render(request, 'blog/comment_form.html', {'form': form})
+# Create comment
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'blog/comment_form.html'
 
-# Edit comment
-@login_required
-def edit_comment(request, comment_id):
-    comment = get_object_or_404(Comment, pk=comment_id)
-    if request.user != comment.author:
-        messages.error(request, 'You are not allowed to edit this comment.')
-        return redirect('post_detail', pk=comment.post.pk)
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.post_id = self.kwargs['post_id']
+        return super().form_valid(form)
 
-    if request.method == 'POST':
-        form = CommentForm(request.POST, instance=comment)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Comment updated successfully!')
-            return redirect('post_detail', pk=comment.post.pk)
-    else:
-        form = CommentForm(instance=comment)
+    def get_success_url(self):
+        return self.object.post.get_absolute_url()
 
-    return render(request, 'blog/comment_form.html', {'form': form})
+# Update comment
+class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'blog/comment_form.html'
+
+    def test_func(self):
+        comment = self.get_object()
+        return self.request.user == comment.author
+
+    def get_success_url(self):
+        return self.object.post.get_absolute_url()
 
 # Delete comment
-@login_required
-def delete_comment(request, comment_id):
-    comment = get_object_or_404(Comment, pk=comment_id)
-    if request.user != comment.author:
-        messages.error(request, 'You are not allowed to delete this comment.')
-        return redirect('post_detail', pk=comment.post.pk)
+class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Comment
+    template_name = 'blog/comment_confirm_delete.html'
 
-    if request.method == 'POST':
-        comment.delete()
-        messages.success(request, 'Comment deleted successfully!')
-        return redirect('post_detail', pk=comment.post.pk)
+    def test_func(self):
+        comment = self.get_object()
+        return self.request.user == comment.author
 
-    return render(request, 'blog/comment_confirm_delete.html', {'comment': comment})
+    def get_success_url(self):
+        return self.object.post.get_absolute_url()
+
 
 # List & Detail (open to all)
 class PostListView(ListView):
@@ -77,6 +66,12 @@ class PostListView(ListView):
 class PostDetailView(DetailView):
     model = Post
     template_name = 'blog/post_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comment_form'] = CommentForm()
+        return context
+
 
 # Create (login required)
 class PostCreateView(LoginRequiredMixin, CreateView):

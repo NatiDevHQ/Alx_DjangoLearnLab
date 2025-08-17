@@ -7,15 +7,15 @@
   </p>
   <p><small>{{ comment.created_at }}</small></p>
   {% if user == comment.author %}
-  <a href="{% url 'edit_comment' comment.id %}">Edit</a> |
-  <a href="{% url 'delete_comment' comment.id %}">Delete</a>
+  <a href="{% url 'comment_update' comment.pk %}">Edit</a> |
+  <a href="{% url 'comment_delete' comment.pk %}">Delete</a>
   {% endif %}
 </div>
 {% empty %}
 <p>No comments yet.</p>
 {% endfor %} {% if user.is_authenticated %}
 <h4>Add a comment</h4>
-<form method="post" action="{% url 'add_comment' object.pk %}">
+<form method="post" action="{% url 'comment_create' object.pk %}">
   {% csrf_token %} {{ comment_form.as_p }}
   <button type="submit">Add Comment</button>
 </form>
