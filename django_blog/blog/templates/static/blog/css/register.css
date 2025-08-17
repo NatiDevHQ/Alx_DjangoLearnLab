@@ -1,11 +1,11 @@
 body {
+  font-family: Arial;
   background: #eef5f9;
-  font-family: Arial, sans-serif;
 }
 form {
   margin: 50px auto;
   width: 350px;
   padding: 20px;
-  background: white;
+  background: #fff;
   border-radius: 8px;
 }

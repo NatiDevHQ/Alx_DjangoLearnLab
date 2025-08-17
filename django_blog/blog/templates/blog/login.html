@@ -2,12 +2,12 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="{% static 'blog/css/login.css' %}" />
     <title>Login</title>
-    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
   </head>
   <body>
     <h2>Login</h2>
-    <form method="POST">
+    <form method="post">
       {% csrf_token %} {{ form.as_p }}
       <button type="submit">Login</button>
     </form>

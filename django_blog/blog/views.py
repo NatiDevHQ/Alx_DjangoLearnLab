@@ -1,67 +1,38 @@
-
-# Create your views here.
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from django.contrib import messages
-
 from .forms import RegistrationForm, ProfileForm
 
-# --- Auth views using Django built-ins (login/logout) with our templates ---
-
+# --- Login and Logout ---
 class BlogLoginView(LoginView):
-    template_name = 'blog/auth/login.html'   # custom template path
+    template_name = 'blog/auth/login.html'
     redirect_authenticated_user = True
 
-
 class BlogLogoutView(LogoutView):
-    next_page = reverse_lazy('login')        # also set in settings as LOGOUT_REDIRECT_URL
+    next_page = reverse_lazy('login')
 
-
-# --- Registration view (custom) ---
-
+# --- Registration ---
 def register(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # Optional: auto-login after registration
-            login(request, user)
+            login(request, user)  # auto-login after register
             return redirect('profile')
     else:
         form = RegistrationForm()
-    # CSRF is handled by template {% csrf_token %}
     return render(request, 'blog/auth/register.html', {"form": form})
 
-
-# --- Profile view (view + edit) ---
-
+# --- Profile ---
 @login_required
 def profile(request):
     if request.method == "POST":
         form = ProfileForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('profile')  # PRG pattern to avoid resubmission
+            return redirect('profile')
     else:
         form = ProfileForm(instance=request.user)
-
     return render(request, 'blog/auth/profile.html', {"form": form})
-
-
-
-@login_required
-def profile(request):
-    if request.method == 'POST':
-        user = request.user
-        user.username = request.POST.get('username')
-        user.email = request.POST.get('email')
-        user.save()
-        messages.success(request, "Profile updated successfully!")
-        return redirect('profile')
-    return render(request, 'profile.html')

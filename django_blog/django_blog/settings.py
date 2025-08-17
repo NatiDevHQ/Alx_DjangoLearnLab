@@ -144,9 +144,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
-
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = [BASE_DIR / "static"]  # Optional project-level static

@@ -24,7 +24,5 @@ from blog import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),  # login/logout
-    path('register/', views.register, name='register'),
-    path('profile/', views.profile, name='profile'),
+    path('', include('blog.urls')),
 ]
