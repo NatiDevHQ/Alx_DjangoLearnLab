@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from .views import PostByTagListView
+
 
 urlpatterns = [
     # Blog post CRUD
@@ -21,6 +23,6 @@ urlpatterns = [
     path('profile/', views.ProfileView.as_view(), name='profile'),
 
     # Tagging and Search URLs (ALX expected)
-    path('tags/<str:tag_name>/', views.TagPostListView.as_view(), name='tag_posts'),
+     path("tags/<slug:tag_slug>/", PostByTagListView.as_view(), name="posts_by_tag"),
     path('search/', views.SearchResultsView.as_view(), name='search_results'),
 ]
