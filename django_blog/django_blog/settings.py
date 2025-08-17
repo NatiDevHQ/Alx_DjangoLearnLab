@@ -140,14 +140,13 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# Where Django looks for templates (keep if you already set this up)
-
-# Static files (you already have STATIC_URL; keep this)
-STATIC_URL = 'static/'
 
 
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
-# Optional project-level static (we’ll also keep app-level static)
-# STATICFILES_DIRS = [ BASE_DIR / 'static' ]
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
