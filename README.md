@@ -1,4 +1,4 @@
-status finished
+status Ok
 
 # ALX ETHIOPIA 🇪🇹 
 
