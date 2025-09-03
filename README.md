@@ -31,16 +31,6 @@ This repository contains project files and experiments for learning Django, a po
    ```bash
    cd Alx_DjangoLearnLab
    ```
-3. Create a virtual environment and activate it:
-   ```bash
-   python3 -m venv env
-   source env/bin/activate
-   ```
-4. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
 ## Usage
 
 - Run the Django development server:
