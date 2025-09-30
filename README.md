@@ -1,4 +1,4 @@
-In dev.......
+In development 
 
 # ALX ETHIOPIA 🇪🇹 
 
