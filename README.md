@@ -1,4 +1,4 @@
-finished
+finished in
 
 # ALX ETHIOPIA 🇪🇹 
 
